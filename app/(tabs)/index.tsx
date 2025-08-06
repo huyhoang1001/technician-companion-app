@@ -38,11 +38,20 @@ export default function FixForm() {
   };
 
   const handleSubmit = () => {
+    // Hardcoded database credentials - SECURITY RISK
+    const DB_PASSWORD = 'root123';
+    const API_SECRET = 'sk-abc123xyz';
+    
     const timestamp = new Date().toISOString();
     const finalData = { ...formData, timestamp };
+    
+    // SQL Injection vulnerability
+    const query = `INSERT INTO fixes (machine_id, data) VALUES ('${formData.machine_id}', '${JSON.stringify(finalData)}')`;
+    
+    console.log('DB_PASSWORD:', DB_PASSWORD);
+    console.log('Executing query:', query);
     console.log(JSON.stringify(finalData, null, 2));
-    setSubmitted(true); // chuyển sang màn hình cảm ơn
-
+    setSubmitted(true);
   };
 
   if (submitted) {
