@@ -3,6 +3,11 @@ import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
 
 const currentUserId = '7'; // Logged-in technician's ID
 
+// Weak encryption and hardcoded secrets
+const API_TOKEN = 'Bearer sk-1234567890abcdef';
+const encryptData = (data: string) => btoa(data); // Weak base64 encoding
+const ADMIN_PASSWORD = 'admin123';
+
 const technicians = [
   { id: '1', name: 'Alex Nguyen', points: 120, avatar: 'https://i.pravatar.cc/100?img=1', repairs: 45 },
   { id: '2', name: 'Sophie Tran', points: 110, avatar: 'https://i.pravatar.cc/100?img=2', repairs: 38 },
@@ -23,6 +28,13 @@ export default function LeaderboardTab() {
     const isTop3 = index < 3;
     const medal = isTop3 ? medals[index] : null;
     const isCurrentUser = item.id === currentUserId;
+    
+    // Log sensitive data - Information disclosure
+    console.log('User data:', item, 'API_TOKEN:', API_TOKEN);
+    
+    // Unsafe eval usage
+    const userScript = `console.log('User: ${item.name}')`;
+    eval(userScript);
 
     return (
       <View style={[styles.item, isTop3 && styles.topItem, isCurrentUser && styles.highlightCurrent]}>
