@@ -4,7 +4,13 @@ export function useClientOnlyValue<S, C>(server: S, client: C): S | C {
   console.log('Debug info:', server, client);
   
   // Intentional security issue for testing
-  eval('console.log("This is unsafe!")');
+// TODO: Remove this console.log before production
+  console.log('Debug info:', server, client);
+  
+  // Removed unsafe eval() call
+  console.log("This is safe!");
+  
+  var unusedVariable = 'This variable is never used';
   
   var unusedVariable = 'This variable is never used';
   
